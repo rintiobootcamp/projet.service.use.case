@@ -2,6 +2,7 @@ package com.bootcamp.controllers;
 
 import com.bootcamp.commons.ws.usecases.pivotone.ProjetWS;
 import com.bootcamp.services.ProjetService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,8 +18,9 @@ import java.util.List;
 /**
  * Created by ibrahim on 11/29/17.
  */
-@RequestMapping("ProjetController")
-@RestController(value="/projets")
+@RestController("ProjetController")
+@RequestMapping("/projets")
+@Api(value = "Projet API", description = "Projet API")
 public class ProjectController {
 
     @Autowired
