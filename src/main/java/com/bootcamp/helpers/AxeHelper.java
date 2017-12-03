@@ -34,7 +34,7 @@ public class AxeHelper {
 
         List<SecteurWS> secteurWSS = new ArrayList<>();
         for(Secteur secteur: axe.getSecteurs()){
-            SecteurWS secteurWS = SecteurHelper.buildSecteurWsObject(secteur, projets, false);
+            SecteurWS secteurWS = SecteurHelper.buildSecteurWsObject(secteur, false);
             secteurWSS.add(secteurWS);
         }
 

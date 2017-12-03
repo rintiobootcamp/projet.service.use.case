@@ -39,7 +39,6 @@ public class ProjetHelper {
         projetws.setBudgetReel(projet.getBudgetReel());
         projetws.setCoutReel(projet.getCoutReel());
         projetws.setObjectif(projet.getObjectif());
-        projetws.setSecteurId(projet.getIdSecteur());
         projetws.setPhases(PhaseHelper.buildPhaseWsList(projet.getPhases()));
         projetws.setPhaseActuelle(getProjetActualPhase(projet.getPhases()));
         List<RegionWS> regionWSS = new ArrayList<>();
@@ -70,11 +69,11 @@ public class ProjetHelper {
     }
 
     public static SecteurWS getProjetSector(int idSecteur) throws IOException{
-        SecteurWS result = new SecteurWS();
+        SecteurWS secteurWS = new SecteurWS();
         SecteurClient secteurClient = new SecteurClient();
         Secteur secteur= secteurClient.getById(idSecteur);
-        result = SecteurHelper.buildNoParentSecteurWs(secteur,true);
-        return result;
+        secteurWS = SecteurHelper.buildNoParentSecteurWs(secteur,true);
+        return secteurWS;
     }
 
     public static List<ProjetWS> buildProjetWSList(List<Projet> projets) throws IOException{

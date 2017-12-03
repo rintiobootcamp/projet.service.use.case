@@ -188,6 +188,46 @@
 
   </dependencies>
 
+  <profiles>
+    <!-- en local -->
+    <profile>
+      <!--profil de production a publier-->
+      <id>local</id>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
+      <build>
+        <resources>
+          <resource>
+            <directory>src/main/resources</directory>
+            <filtering>true</filtering>
+          </resource>
+          <resource>
+            <directory>src/main/resources/local</directory>
+          </resource>
+
+        </resources>
+      </build>
+    </profile>
+
+    <profile>
+      <!--profil de production a publier-->
+      <id>dev</id>
+      <build>
+        <resources>
+          <resource>
+            <directory>src/main/resources</directory>
+            <filtering>true</filtering>
+          </resource>
+          <resource>
+            <directory>src/main/resources/dev</directory>
+          </resource>
+
+        </resources>
+      </build>
+    </profile>
+  </profiles>
+
   <build>
     <plugins>
       <!-- Package as an executable jar/war -->

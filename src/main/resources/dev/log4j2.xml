@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<configuration status="warn" packages="org.apache.logging.log4j.core">
+<configuration status="warn" packages="org.apache.logging.log4j.core,io.sentry.log4j2">
     <Properties>
         <Property name="LOG_PATTERN">%highlight{%d{yyyy-MM-dd HH:mm:ss.SSS zzz} [%t] %c{1.} %-5level: %msg%n%throwable}{FATAL=white, ERROR=red, WARN=yellow, INFO=green, DEBUG=green, TRACE=green}</Property>
     </Properties>
@@ -8,7 +8,7 @@
             <PatternLayout pattern="${LOG_PATTERN}"/>
         </Console>
 
-        <RollingRandomAccessFile name="appFile" fileName="${sys:log.path:-logs}/categorie-service-use-case-std.log" filePattern="${sys:log.path:-logs}/categorie-service-use-case-std-%d{yyyy-MM-dd}-%i.gz">
+        <RollingRandomAccessFile name="appFile" fileName="${sys:log.path:-logs}/projet-service-fonctionnel-std.log" filePattern="${sys:log.path:-logs}/projet-service-fonctionnel-std-%d{yyyy-MM-dd}-%i.gz">
             <PatternLayout pattern="${LOG_PATTERN}"/>
             <Policies>
                 <SizeBasedTriggeringPolicy size="25 MB" />
@@ -16,13 +16,13 @@
             </Policies>
             <DefaultRolloverStrategy max="7">
                 <Delete basePath="${sys:log.path:-logs}" maxDepth="2">
-                    <IfFileName glob="*-service-*.gz" />
+                    <IfFileName glob="*projet-service-fonctionnel-*.gz" />
                     <IfLastModified age="14d" />
                 </Delete>
             </DefaultRolloverStrategy>
         </RollingRandomAccessFile>
 
-        <RollingRandomAccessFile name="appErrorFile" fileName="${sys:log.path:-logs}/categorie-service-use-case-error.log" filePattern="${sys:log.path:-logs}/categorie-service-use-case-error-%d{yyyy-MM-dd}-%i.gz">
+        <RollingRandomAccessFile name="appErrorFile" fileName="${sys:log.path:-logs}/projet-service-fonctionnel-error.log" filePattern="${sys:log.path:-logs}/projet-service-fonctionnel-error-%d{yyyy-MM-dd}-%i.gz">
             <PatternLayout pattern="${LOG_PATTERN}"/>
             <Policies>
                 <SizeBasedTriggeringPolicy size="25 MB" />
@@ -30,7 +30,7 @@
             </Policies>
             <DefaultRolloverStrategy max="7">
                 <Delete basePath="${sys:log.path:-logs}" maxDepth="2">
-                    <IfFileName glob="*categorie-service-use-case-*.gz" />
+                    <IfFileName glob="*projet-service-fonctionnel-*.gz" />
                     <IfLastModified age="14d" />
                 </Delete>
             </DefaultRolloverStrategy>
