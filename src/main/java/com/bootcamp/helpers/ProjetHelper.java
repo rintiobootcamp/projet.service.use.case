@@ -6,6 +6,8 @@
 package com.bootcamp.helpers;
 
 import com.bootcamp.client.SecteurClient;
+import com.bootcamp.commons.ws.usecases.pivotone.LikeWS;
+import com.bootcamp.commons.ws.usecases.pivotone.NoteWS;
 import com.bootcamp.commons.ws.usecases.pivotone.PhaseWS;
 import com.bootcamp.commons.ws.usecases.pivotone.ProjetWS;
 import com.bootcamp.commons.ws.usecases.pivotone.RegionWS;
@@ -24,6 +26,9 @@ import java.util.List;
  * @author Ibrahim
  */
 public class ProjetHelper {
+    
+//    LikeClient likeClient = new LikeClient();
+//    NoteClient noteClient = new NoteClient();
 
     public static ProjetWS buildProjetWsObject(Projet projet) throws IOException{
         ProjetWS projetws = new ProjetWS();
@@ -39,6 +44,8 @@ public class ProjetHelper {
         projetws.setBudgetReel(projet.getBudgetReel());
         projetws.setCoutReel(projet.getCoutReel());
         projetws.setObjectif(projet.getObjectif());
+        projetws.setLikes(getProjectsLikeStatistique(projet.getId()));
+        projetws.setNotes(getProjectsNoteStatistique(projet.getId()));
         projetws.setPhases(PhaseHelper.buildPhaseWsList(projet.getPhases()));
         projetws.setPhaseActuelle(getProjetActualPhase(projet.getPhases()));
         List<RegionWS> regionWSS = new ArrayList<>();
@@ -70,9 +77,11 @@ public class ProjetHelper {
 
     public static SecteurWS getProjetSector(int idSecteur) throws IOException{
         SecteurWS secteurWS = new SecteurWS();
+        /*
         SecteurClient secteurClient = new SecteurClient();
         Secteur secteur= secteurClient.getById(idSecteur);
         secteurWS = SecteurHelper.buildNoParentSecteurWs(secteur,true);
+        */
         return secteurWS;
     }
 
@@ -84,5 +93,30 @@ public class ProjetHelper {
         return projetWSs;
     }
 
-
+    public static LikeWS getProjectsLikeStatistique(int idProject){
+        String entityType = "Projet";
+        //LikeWS likews = likeClient.getLike(entityType,idProject);
+        
+        //return likews;
+        // TEST
+        LikeWS likews = new LikeWS();
+        likews.setLike(50L);
+        likews.setUnlike(20L);
+        return likews;
+    }
+    
+    public static NoteWS getProjectsNoteStatistique(int idProject){
+        String entityType = "Projet";
+        //NoteWS notews = noteClient.getNote(entityType,idProject);
+        
+        //return notews;
+        //TEST
+        NoteWS notews = new NoteWS();
+        notews.setStar1(15);
+        notews.setStart2(11);
+        notews.setStart3(22);
+        notews.setStart4(3);
+        notews.setStart5(5);
+        return notews;
+    }
 }

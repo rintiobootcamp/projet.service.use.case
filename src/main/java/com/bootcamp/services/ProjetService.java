@@ -41,7 +41,8 @@ public class ProjetService {
     }
 
     public ProjetWS getProjet(int idProjet) throws IOException{
-       Projet projet= projetClient.getById(idProjet);
+       //Projet projet= projetClient.getById(idProjet);
+        Projet projet = new Projet();
         return ProjetHelper.buildProjetWsObject(projet);
     }
 }
