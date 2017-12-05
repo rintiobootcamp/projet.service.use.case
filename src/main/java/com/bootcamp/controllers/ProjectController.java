@@ -14,13 +14,15 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
 import java.util.List;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 /**
- * Created by ibrahim on 11/29/17.
+ * Created by Bignon .
  */
 @RestController("ProjetController")
 @RequestMapping("/projets")
 @Api(value = "Projet API", description = "Projet API")
+@CrossOrigin(origins = "*")
 public class ProjectController {
 
     @Autowired

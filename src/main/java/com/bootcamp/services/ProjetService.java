@@ -15,13 +15,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by darextossa on 11/29/17.
+ * Created by Bignon.
  */
 
 @Component
 public class ProjetService {
 
     ProjetClient projetClient;
+    ProjetHelper projetHelper = new ProjetHelper();
 
     @PostConstruct
     public void init(){
@@ -31,18 +32,17 @@ public class ProjetService {
 
     public List<ProjetWS> getAll() throws IOException {
         List<Projet> projets = projetClient.findAll();
-        List<ProjetWS> result = new ArrayList<>();
+        List<ProjetWS> result = new ArrayList<ProjetWS>();
         for (Projet current : projets) {
             ProjetWS projetWS = new ProjetWS();
-            projetWS = ProjetHelper.buildProjetWsObject(current);
+            projetWS = projetHelper.buildProjetWsObject(current);
             result.add(projetWS);
         }
             return result;
     }
 
     public ProjetWS getProjet(int idProjet) throws IOException{
-       //Projet projet= projetClient.getById(idProjet);
-        Projet projet = new Projet();
-        return ProjetHelper.buildProjetWsObject(projet);
+       Projet projet= projetClient.getById(idProjet);
+        return projetHelper.buildProjetWsObject(projet);
     }
 }

@@ -5,7 +5,10 @@
  */
 package com.bootcamp.helpers;
 
+import com.bootcamp.client.LikeClient;
+import com.bootcamp.client.NoteClient;
 import com.bootcamp.client.SecteurClient;
+import com.bootcamp.commons.enums.EntityType;
 import com.bootcamp.commons.ws.usecases.pivotone.LikeWS;
 import com.bootcamp.commons.ws.usecases.pivotone.NoteWS;
 import com.bootcamp.commons.ws.usecases.pivotone.PhaseWS;
@@ -27,10 +30,10 @@ import java.util.List;
  */
 public class ProjetHelper {
     
-//    LikeClient likeClient = new LikeClient();
-//    NoteClient noteClient = new NoteClient();
+   LikeClient likeClient = new LikeClient();
+   NoteClient noteClient = new NoteClient();
 
-    public static ProjetWS buildProjetWsObject(Projet projet) throws IOException{
+    public ProjetWS buildProjetWsObject(Projet projet) throws IOException{
         ProjetWS projetws = new ProjetWS();
         projetws.setId(projet.getId());
         projetws.setReference(projet.getReference());
@@ -44,6 +47,7 @@ public class ProjetHelper {
         projetws.setBudgetReel(projet.getBudgetReel());
         projetws.setCoutReel(projet.getCoutReel());
         projetws.setObjectif(projet.getObjectif());
+        
         projetws.setLikes(getProjectsLikeStatistique(projet.getId()));
         projetws.setNotes(getProjectsNoteStatistique(projet.getId()));
         projetws.setPhases(PhaseHelper.buildPhaseWsList(projet.getPhases()));
@@ -66,7 +70,7 @@ public class ProjetHelper {
         return projetws;
     }
 
-    public static PhaseWS getProjetActualPhase(List<Phase> phases){
+    public PhaseWS getProjetActualPhase(List<Phase> phases){
         PhaseWS result = new PhaseWS();
         for(Phase phase:phases){
             if(phase.isActif())
@@ -75,17 +79,15 @@ public class ProjetHelper {
         return result;
     }
 
-    public static SecteurWS getProjetSector(int idSecteur) throws IOException{
+    public SecteurWS getProjetSector(int idSecteur) throws IOException{
         SecteurWS secteurWS = new SecteurWS();
-        /*
         SecteurClient secteurClient = new SecteurClient();
         Secteur secteur= secteurClient.getById(idSecteur);
         secteurWS = SecteurHelper.buildNoParentSecteurWs(secteur,true);
-        */
         return secteurWS;
     }
 
-    public static List<ProjetWS> buildProjetWSList(List<Projet> projets) throws IOException{
+    public List<ProjetWS> buildProjetWSList(List<Projet> projets) throws IOException{
         List<ProjetWS> projetWSs = new ArrayList<>();
         for(Projet projet:projets){
             projetWSs.add(buildProjetWsObject(projet));
@@ -93,30 +95,14 @@ public class ProjetHelper {
         return projetWSs;
     }
 
-    public static LikeWS getProjectsLikeStatistique(int idProject){
-        String entityType = "Projet";
-        //LikeWS likews = likeClient.getLike(entityType,idProject);
+    private LikeWS getProjectsLikeStatistique(int idProject) throws IOException{
+        LikeWS likews = likeClient.getClient(EntityType.PROJET.name(),idProject);
         
-        //return likews;
-        // TEST
-        LikeWS likews = new LikeWS();
-        likews.setLike(50L);
-        likews.setUnlike(20L);
         return likews;
     }
     
-    public static NoteWS getProjectsNoteStatistique(int idProject){
-        String entityType = "Projet";
-        //NoteWS notews = noteClient.getNote(entityType,idProject);
-        
-        //return notews;
-        //TEST
-        NoteWS notews = new NoteWS();
-        notews.setStar1(15);
-        notews.setStart2(11);
-        notews.setStart3(22);
-        notews.setStart4(3);
-        notews.setStart5(5);
+    private NoteWS getProjectsNoteStatistique(int idProject) throws IOException{
+        NoteWS notews = noteClient.getNote(EntityType.PROJET.name(),idProject);
         return notews;
     }
 }
