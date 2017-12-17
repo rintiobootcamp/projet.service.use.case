@@ -11,6 +11,12 @@ import java.util.List;
  */
 public class PhaseHelper {
 
+    /**
+     * Build the PhaseWS object from a Phase object
+     *
+     * @param phase
+     * @return phaseWS
+     */
     public static PhaseWS buildPhaseWSObject(Phase phase) {
         PhaseWS phaseWS = new PhaseWS();
         phaseWS.setDateFin(phase.getDateFin());
@@ -21,9 +27,15 @@ public class PhaseHelper {
         return phaseWS;
     }
 
-    public static List<PhaseWS> buildPhaseWsList(List<Phase> phases){
+    /**
+     * Build the PhaseWS object list from a Phase object list
+     *
+     * @param phases
+     * @return phaseWS list
+     */
+    public static List<PhaseWS> buildPhaseWsList(List<Phase> phases) {
         List<PhaseWS> result = new ArrayList<>();
-        for(Phase phase:phases){
+        for (Phase phase : phases) {
             result.add(buildPhaseWSObject(phase));
         }
         return result;

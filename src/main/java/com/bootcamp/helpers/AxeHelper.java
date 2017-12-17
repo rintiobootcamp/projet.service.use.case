@@ -17,6 +17,16 @@ import java.util.List;
  */
 public class AxeHelper {
 
+    /**
+     * Build the AxeWS object from the given Axe object and Projet object list
+     * and then add the axe parent if needed
+     *
+     * @param axe
+     * @param projets
+     * @param addParent
+     * @return axeWS
+     * @throws IOException
+     */
     public static AxeWS buildAxewsObject(Axe axe, List<Projet> projets, Boolean addParent) throws IOException {
         AxeWS axeWS = new AxeWS();
 
@@ -29,11 +39,12 @@ public class AxeHelper {
         axeWS.setTitreFocus(axe.getTitreFocus());
         axeWS.setDateMiseAJour(axe.getDateMiseAJour());
 
-        if(addParent)
+        if (addParent) {
             axeWS = addParent(axe, axeWS);
+        }
 
         List<SecteurWS> secteurWSS = new ArrayList<>();
-        for(Secteur secteur: axe.getSecteurs()){
+        for (Secteur secteur : axe.getSecteurs()) {
             SecteurWS secteurWS = SecteurHelper.buildSecteurWsObject(secteur, false);
             secteurWSS.add(secteurWS);
         }
@@ -41,8 +52,14 @@ public class AxeHelper {
         return axeWS;
     }
 
-
-    public static AxeWS addParent(Axe axe, AxeWS axeWS){
+    /**
+     * Add the pillar parent of an axe to an existing axeWS
+     *
+     * @param axe
+     * @param axeWS
+     * @return
+     */
+    public static AxeWS addParent(Axe axe, AxeWS axeWS) {
         Pilier pilier = axe.getPilier();
         HashMap<String, Object> map = new HashMap<>();
         map.put("id", pilier.getId());
@@ -56,18 +73,22 @@ public class AxeHelper {
         return axeWS;
     }
 
-
-
-
+    /**
+     * Build the AxeWS object list from the given Axe object list and Projet
+     * object list
+     *
+     * @param axes
+     * @param projetList
+     * @return axeWSS
+     * @throws IOException
+     */
     public static List<AxeWS> buildAxes(List<Axe> axes, List<Projet> projetList) throws IOException {
         List<AxeWS> axeWSS = new ArrayList<>();
-        for(Axe axe: axes){
+        for (Axe axe : axes) {
             AxeWS axeWS = buildAxewsObject(axe, projetList, true);
             axeWSS.add(axeWS);
         }
         return axeWSS;
     }
-
-
 
 }

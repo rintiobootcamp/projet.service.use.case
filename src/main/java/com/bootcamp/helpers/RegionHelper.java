@@ -8,6 +8,12 @@ import com.bootcamp.entities.Region;
  */
 public class RegionHelper {
 
+    /**
+     * Build the RegionWS object from a Region (location) object
+     *
+     * @param region
+     * @return regionWS
+     */
     public static RegionWS buildRegionWSObject(Region region) {
         RegionWS regionWS = new RegionWS();
         regionWS.setLatitude(region.getLatitude());
