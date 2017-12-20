@@ -6,10 +6,15 @@ import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.testng.Assert;
 import org.testng.annotations.Test;
+<<<<<<< HEAD
 
 import static com.jayway.restassured.RestAssured.given;
 
 
+=======
+import static com.jayway.restassured.RestAssured.given;
+
+>>>>>>> c35e913fafebb2c06028bdea15249bcaab208029
 public class statistiqueTest {
 
     private static Logger logger = LogManager.getLogger(StatistiqueController.class);
@@ -18,7 +23,11 @@ public class statistiqueTest {
      *The Base URI of statistique fonctionnal service,
      * it can be change with the online URIof this service.
      */
+<<<<<<< HEAD
     private String BASE_URI = "http://localhost:9093/stat";
+=======
+    private String BASE_URI = "http://104.131.60.151:9093/stat";
+>>>>>>> c35e913fafebb2c06028bdea15249bcaab208029
 
     /**
      * The path of the Debat controller, according to this controller implementation
@@ -29,13 +38,21 @@ public class statistiqueTest {
      * The startDate initialize for statistic method, you have
      * make sure that this is correct in one of the value in database
      */
+<<<<<<< HEAD
     private long startDate = 0;
+=======
+    private long startDate = 1511907379;
+>>>>>>> c35e913fafebb2c06028bdea15249bcaab208029
 
     /**
      * The endDate initialize for statistic method, you have
      * make sure that this is correct in one of the value in database
      */
+<<<<<<< HEAD
     private long endDate = 0;
+=======
+    private long endDate = 1511907390;
+>>>>>>> c35e913fafebb2c06028bdea15249bcaab208029
 
     /**
      * A entity of type:

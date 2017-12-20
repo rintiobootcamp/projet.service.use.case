@@ -1,6 +1,8 @@
 package com.bootcamp.controllers;
 
+
 import com.bootcamp.services.Stat;
+
 import com.bootcamp.services.StatistiqueService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -12,8 +14,18 @@ import org.springframework.web.bind.annotation.*;
 import java.io.IOException;
 
 
+
 /**
  * Created by Hilaire and reviewed by Moh.
+=======
+import java.util.HashMap;
+import java.util.List;
+
+import javax.ws.rs.QueryParam;
+
+/**
+ * Created by Bignon .
+>>>>>>> c35e913fafebb2c06028bdea15249bcaab208029
  */
 @RestController("StatistiqueController")
 @RequestMapping("/stats")
@@ -23,6 +35,7 @@ public class StatistiqueController {
 
     @Autowired
     StatistiqueService statistiqueService;
+
 
     /**
      * Methode pour obtenir les statisques globales sur un type d'entite en donnant son id

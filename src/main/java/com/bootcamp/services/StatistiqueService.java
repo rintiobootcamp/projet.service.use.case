@@ -2,18 +2,20 @@ package com.bootcamp.services;
 
 
 
-
 import com.bootcamp.client.CommentaireClient;
 import com.bootcamp.client.DebatClient;
 import com.bootcamp.client.LikeClient;
 import com.bootcamp.entities.Commentaire;
 import com.bootcamp.entities.Debat;
 import com.bootcamp.entities.LikeTable;
+
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import java.io.IOException;
+
 import java.text.DecimalFormat;
+
 import java.util.List;
 
 /**
@@ -29,12 +31,15 @@ public class StatistiqueService {
 
 
     @PostConstruct
-    public void init() {
+
+    public void init(){
+
 
         debatClient = new DebatClient();
         commentaireClient = new CommentaireClient();
         likeClient = new LikeClient();
     }
+
 
     public Stat getStatistique(String entity, int entityId, long startDate, long endDate) throws IOException {
 
@@ -169,4 +174,5 @@ public class StatistiqueService {
         
         return stat;
     }
+
 }
