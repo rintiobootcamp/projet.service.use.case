@@ -51,14 +51,14 @@ public class ProjetHelper {
         projetws.setDateDebutPrevisionnel(projet.getDateDebutPrevisionnel());
         projetws.setDateFinPrevisionnel(projet.getDateFinPrevisionnel());
         projetws.setBudgetPrevisionnel(projet.getBudgetPrevisionnel());
-        projetws.setBudgetReel(projet.getBudgetReel());
+        projetws.setFinancementPublic(projet.getFinancementPublic());
         projetws.setCoutReel(projet.getCoutReel());
-        projetws.setObjectif(projet.getObjectif());
+//        projetws.setObjectif(projet.getObjectif());
 
         projetws.setLikes(getProjectsLikeStatistique(projet.getId()));
         projetws.setNotes(getProjectsNoteStatistique(projet.getId()));
         projetws.setPhases(PhaseHelper.buildPhaseWsList(projet.getPhases()));
-        projetws.setPhaseActuelle(getProjetActualPhase(projet.getPhases()));
+//        projetws.setPhaseActuelle(getProjetActualPhase(projet.getPhases()));
         List<RegionWS> regionWSS = new ArrayList<>();
         for (Region region : projet.getRegions()) {
             RegionWS regionWS = RegionHelper.buildRegionWSObject(region);

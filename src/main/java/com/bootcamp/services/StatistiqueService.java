@@ -1,7 +1,6 @@
 package com.bootcamp.services;
 
 
-
 import com.bootcamp.client.CommentaireClient;
 import com.bootcamp.client.DebatClient;
 import com.bootcamp.client.LikeClient;
@@ -19,7 +18,7 @@ import java.text.DecimalFormat;
 import java.util.List;
 
 /**
- * Created by Bignon.
+ * Created by Bignon reviewed by Moh.
  */
 
 @Component
@@ -32,7 +31,7 @@ public class StatistiqueService {
 
     @PostConstruct
 
-    public void init(){
+    public void init() {
 
 
         debatClient = new DebatClient();
@@ -59,9 +58,9 @@ public class StatistiqueService {
         double nbreUnLike = 0;
         double nbreTotalUnLike = 0;
 
-        DecimalFormat df = new DecimalFormat ( ) ; 
-        df.setMaximumFractionDigits ( 4 ) ; //arrondi à 4 chiffres apres la virgules 
-        df.setMinimumFractionDigits ( 2 ) ;
+        DecimalFormat df = new DecimalFormat();
+        df.setMaximumFractionDigits(4); //arrondi à 4 chiffres apres la virgules
+        df.setMinimumFractionDigits(2);
 
         for (Debat debat : debats) {
             if (debat.getEntityId() == entityId)
@@ -93,46 +92,45 @@ public class StatistiqueService {
 
         Stat stat = new Stat();
         stat.setNbreComment(nbreComment);
-        
+
         if (nbreTotalComment == 0) {
             stat.setTauxComment(0);
-        } else{
-            stat.setTauxComment(nbreComment / nbreTotalComment) ;
+        } else {
+            stat.setTauxComment(nbreComment / nbreTotalComment);
         }
 
         stat.setNbreDebat(nbreDebat);
         if (nbreTotalDebat == 0) {
             stat.setTauxDebat(0);
-        } else{
-           stat.setTauxDebat((nbreDebat / nbreTotalDebat) );  
+        } else {
+            stat.setTauxDebat((nbreDebat / nbreTotalDebat));
         }
-           
 
 
         stat.setNbreLike(nbreLike);
         if (nbreTotalLike == 0) {
             stat.setTauxLike(0);
-        } else{
+        } else {
 
-            stat.setTauxLike((nbreLike / nbreTotalLike) );
+            stat.setTauxLike((nbreLike / nbreTotalLike));
         }
         stat.setNbreUnLike(nbreUnLike);
         if (nbreTotalUnLike == 0) {
             stat.setTauxUnLike(0);
-        } else{
+        } else {
 
-            stat.setTauxUnLike((nbreUnLike / nbreTotalUnLike) );
+            stat.setTauxUnLike((nbreUnLike / nbreTotalUnLike));
         }
         stat.setNbreTotalComment(nbreTotalComment);
         stat.setNbreTotalDebat(nbreTotalDebat);
         stat.setNbreTotalLike(nbreTotalLike);
         stat.setNbreTotalUnLike(nbreTotalUnLike);
-        
+
         return stat;
     }
 
 
-        public Stat getStatistiqueAll(String entity, long startDate, long endDate) throws IOException {
+    public StatGlobal getStatistiqueAll(String entity, long startDate, long endDate) throws IOException {
 
         List<Commentaire> commentaires = commentaireClient.getAllCommentByAllEntity(entity, startDate, endDate);
         List<LikeTable> likes = likeClient.getAllLikeOrUnlikeByEntity(entity, startDate, endDate);
@@ -146,32 +144,31 @@ public class StatistiqueService {
         double nbreTotalLike = 0;
         double nbreTotalUnLike = 0;
 
-        DecimalFormat df = new DecimalFormat ( ) ; 
-        df.setMaximumFractionDigits ( 4 ) ; //arrondi à 4 chiffres apres la virgules 
-        df.setMinimumFractionDigits ( 2 ) ;
+        DecimalFormat df = new DecimalFormat();
+        df.setMaximumFractionDigits(4); //arrondi à 4 chiffres apres la virgules
+        df.setMinimumFractionDigits(2);
 
-       
 
         for (LikeTable like : likes) {
             if (like.isLikeType()) {
                 nbreTotalLike++;
-          
+
             } else if (!like.isLikeType()) {
                 nbreTotalUnLike++;
-              
+
             }
         }
         //Double.parseDouble(df.format(
         nbreTotalComment = commentaires.size();
         nbreTotalDebat = debats.size();
 
-        Stat stat = new Stat();
-       
+        StatGlobal stat = new StatGlobal();
+
         stat.setNbreTotalComment(nbreTotalComment);
         stat.setNbreTotalDebat(nbreTotalDebat);
         stat.setNbreTotalLike(nbreTotalLike);
         stat.setNbreTotalUnLike(nbreTotalUnLike);
-        
+
         return stat;
     }
 

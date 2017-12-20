@@ -3,6 +3,7 @@ package com.bootcamp.controllers;
 
 import com.bootcamp.services.Stat;
 
+import com.bootcamp.services.StatGlobal;
 import com.bootcamp.services.StatistiqueService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -55,9 +56,9 @@ public class StatistiqueController {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/{entityType}")
-    @ApiOperation(value=" Get all statistics about an entity",notes="Get all statistics about an entity")
-    public ResponseEntity<Stat> getAllStatByEntity(@PathVariable("entityType") String entityType,@RequestParam("startDate") long startDate, @RequestParam("endDate") long endDate) throws IOException{
-        Stat stat = statistiqueService.getStatistiqueAll(entityType,startDate,endDate);
+    @ApiOperation(value=" Get all statistics about an entityType",notes="Get all statistics about an entityType")
+    public ResponseEntity<StatGlobal> getAllStatByEntity(@PathVariable("entityType") String entityType,@RequestParam("startDate") long startDate, @RequestParam("endDate") long endDate) throws IOException{
+        StatGlobal stat = statistiqueService.getStatistiqueAll(entityType,startDate,endDate);
         return new ResponseEntity<>(stat,HttpStatus.OK);
 
     }
