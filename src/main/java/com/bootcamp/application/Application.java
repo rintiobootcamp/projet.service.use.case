@@ -31,7 +31,7 @@ import java.util.Locale;
 @Configuration
 @ComponentScan({"com.bootcamp"})
 @PropertySources({
-        @PropertySource(value = "classpath:/projet.uc.properties", ignoreResourceNotFound = true),
+        @PropertySource(value = "classpath:/stats.uc.properties", ignoreResourceNotFound = true),
 })
 @EnableAutoConfiguration(exclude={DataSourceAutoConfiguration.class, HibernateJpaAutoConfiguration.class, FlywayAutoConfiguration.class})
 @EnableCaching
