@@ -1,7 +1,8 @@
 package com.bootcamp.controllers;
 
-import com.bootcamp.commons.ws.usecases.pivotone.ProjetWS;
+import com.bootcamp.helpers.ProjetWS;
 import com.bootcamp.services.ProjetService;
+import infos.ProjetAIO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,10 +36,10 @@ public class ProjectController {
      * @throws IOException
      */
     @RequestMapping(method = RequestMethod.GET)
-    @ApiOperation(value = " Get all projets", notes = "Get all the projets")
-    public ResponseEntity<List<ProjetWS>> getAll() throws IOException {
-        List<ProjetWS> projets = projetService.getAll();
-        return new ResponseEntity<List<ProjetWS>>(projets, HttpStatus.OK);
+    @ApiOperation(value = " Get all projets with medias", notes = "Get all the projets with medias")
+    public ResponseEntity<List<ProjetAIO>> getAll() throws Exception {
+        List<ProjetAIO> projets = projetService.buildProjetAIO();
+        return new ResponseEntity<List<ProjetAIO>>(projets, HttpStatus.OK);
 
     }
 
@@ -50,7 +51,7 @@ public class ProjectController {
      * @throws IOException
      */
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    @ApiOperation(value = " Get one projet", notes = "Get particular projet by it id")
+    @ApiOperation(value = " Get one projet with medias", notes = "Get particular projet with medias by it id")
     public ResponseEntity<ProjetWS> getById(@PathVariable int id) throws IOException {
         ProjetWS projet = projetService.getProjet(id);
         return new ResponseEntity<ProjetWS>(projet, HttpStatus.OK);

@@ -5,132 +5,198 @@
  */
 package com.bootcamp.helpers;
 
-import com.bootcamp.client.LikeClient;
-import com.bootcamp.client.NoteClient;
-import com.bootcamp.client.SecteurClient;
-import com.bootcamp.commons.enums.EntityType;
-import com.bootcamp.commons.ws.usecases.pivotone.LikeWS;
-import com.bootcamp.commons.ws.usecases.pivotone.NoteWS;
-import com.bootcamp.commons.ws.usecases.pivotone.PhaseWS;
-import com.bootcamp.commons.ws.usecases.pivotone.ProjetWS;
-import com.bootcamp.commons.ws.usecases.pivotone.RegionWS;
-import com.bootcamp.commons.ws.usecases.pivotone.SecteurWS;
-import com.bootcamp.entities.Phase;
-import com.bootcamp.entities.Projet;
-import com.bootcamp.entities.Region;
-import com.bootcamp.entities.Secteur;
+import com.bootcamp.entities.*;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  *
- * @author Ibrahim
+ * @author Bello
  */
 public class ProjetHelper {
 
-    LikeClient likeClient = new LikeClient();
-    NoteClient noteClient = new NoteClient();
+    public ProjetWS buildProjetWS(Projet projet) {
+        ProjetWS projetWS = new ProjetWS();
 
-    /**
-     * Build the ProjetWS object from a Projet object
-     *
-     * @param projet
-     * @return projetws
-     * @throws IOException
-     */
-    public ProjetWS buildProjetWsObject(Projet projet) throws IOException {
-        ProjetWS projetws = new ProjetWS();
-        projetws.setId(projet.getId());
-        projetws.setReference(projet.getReference());
-        projetws.setDateFinReel(projet.getDateFinReel());
-        projetws.setNom(projet.getNom());
-        projetws.setDescription(projet.getDescription());
-        projetws.setDateDebutReel(projet.getDateDebutReel());
-        projetws.setDateDebutPrevisionnel(projet.getDateDebutPrevisionnel());
-        projetws.setDateFinPrevisionnel(projet.getDateFinPrevisionnel());
-        projetws.setBudgetPrevisionnel(projet.getBudgetPrevisionnel());
-        projetws.setFinancementPublic(projet.getFinancementPublic());
-        projetws.setCoutReel(projet.getCoutReel());
-//        projetws.setObjectif(projet.getObjectif());
+        projetWS.setId(projet.getId());
+        projetWS.setNom(projet.getNom());
+        projetWS.setIdProgramme(projet.getIdProgramme());
+        projetWS.setIdSecteur(projet.getIdSecteur());
+        projetWS.setReference(projet.getReference());
+        projetWS.setDescription(projet.getDescription());
+        projetWS.setEtat(projet.getEtat());
+        projetWS.setBudgetPrevisionnel(projet.getBudgetPrevisionnel());
+        projetWS.setCoutReel(projet.getCoutReel());
+        projetWS.setDateDebutPrevisionnel(projet.getDateDebutPrevisionnel());
+        projetWS.setDateFinPrevisionnel(projet.getDateFinPrevisionnel());
+        projetWS.setDateDebutReel(projet.getDateDebutReel());
+        projetWS.setDateFinReel(projet.getDateFinReel());
+        projetWS.setFinancementPrivePrevisionnel(projet.getFinancementPrivePrevisionnel());
+        projetWS.setFinancementPublicPrevisionnel(projet.getFinancementPublicPrevisionnel());
+        projetWS.setFinancementPriveReel(projet.getFinancementPriveReel());
+        projetWS.setFinancementPublicReel(projet.getFinancementPublicReel());
 
-        projetws.setLikes(getProjectsLikeStatistique(projet.getId()));
-        projetws.setNotes(getProjectsNoteStatistique(projet.getId()));
-        projetws.setPhases(PhaseHelper.buildPhaseWsList(projet.getPhases()));
-//        projetws.setPhaseActuelle(getProjetActualPhase(projet.getPhases()));
-        List<RegionWS> regionWSS = new ArrayList<>();
-        for (Region region : projet.getRegions()) {
-            RegionWS regionWS = RegionHelper.buildRegionWSObject(region);
-            regionWSS.add(regionWS);
+        if (projet.getImpactList() != null) {
+            projetWS.setImpactList(this.buildListImpactWS(projet.getImpactList()));
         }
-        projetws.setRegions(regionWSS);
-
-        List<PhaseWS> phaseWSS = new ArrayList<>();
-        for (Phase phase : projet.getPhases()) {
-            PhaseWS phaseWS = PhaseHelper.buildPhaseWSObject(phase);
-            phaseWSS.add(phaseWS);
+        if (projet.getObjectifList() != null) {
+            projetWS.setObjectifList(this.buildListObjectifWS(projet.getObjectifList()));
         }
-        projetws.setPhases(phaseWSS);
-        projetws.setSecteurId(projet.getIdSecteur());
-        projetws.setSecteur(getProjetSector(projet.getIdSecteur()));
-        return projetws;
+        if (projet.getPhases() != null) {
+            projetWS.setPhases(this.buildListPhaseWS(projet.getPhases()));
+        }
+        if (projet.getRegions() != null) {
+            projetWS.setRegions(this.buildListRegionWS(projet.getRegions()));
+        }
+
+        return projetWS;
     }
 
-    /**
-     * Get the project enable phases list (or steps list)
-     *
-     * @param phases
-     * @return phases list
-     */
-    public PhaseWS getProjetActualPhase(List<Phase> phases) {
-        PhaseWS result = new PhaseWS();
-        for (Phase phase : phases) {
-            if (phase.isActif()) {
-                result = PhaseHelper.buildPhaseWSObject(phase);
-            }
-        }
-        return result;
+    public Projet buildProjet(ProjetWS projetWS) {
+        Projet projet = new Projet();
+
+        projet.setId(projetWS.getId());
+        projet.setNom(projetWS.getNom());
+        projet.setIdProgramme(projetWS.getIdProgramme());
+        projet.setIdSecteur(projetWS.getIdSecteur());
+        projet.setReference(projetWS.getReference());
+        projet.setDescription(projetWS.getDescription());
+        projet.setEtat(projetWS.getEtat());
+        projet.setBudgetPrevisionnel(projetWS.getBudgetPrevisionnel());
+        projet.setCoutReel(projetWS.getCoutReel());
+        projet.setDateDebutPrevisionnel(projetWS.getDateDebutPrevisionnel());
+        projet.setDateFinPrevisionnel(projetWS.getDateFinPrevisionnel());
+        projet.setDateDebutReel(projetWS.getDateDebutReel());
+        projet.setDateFinReel(projetWS.getDateFinReel());
+        projet.setFinancementPrivePrevisionnel(projetWS.getFinancementPrivePrevisionnel());
+        projet.setFinancementPublicPrevisionnel(projetWS.getFinancementPublicPrevisionnel());
+        projet.setFinancementPriveReel(projetWS.getFinancementPriveReel());
+        projet.setFinancementPublicReel(projetWS.getFinancementPublicReel());
+
+        return projet;
     }
 
-    /**
-     * Get the sector to which the project belong
-     *
-     * @param idSecteur the sector id
-     * @return the sector
-     * @throws IOException
-     */
-    public SecteurWS getProjetSector(int idSecteur) throws IOException {
-        SecteurWS secteurWS = new SecteurWS();
-        SecteurClient secteurClient = new SecteurClient();
-        Secteur secteur = secteurClient.getById(idSecteur);
-        secteurWS = SecteurHelper.buildNoParentSecteurWs(secteur, true);
-        return secteurWS;
-    }
-
-    /**
-     * Build the ProjetWS object list from a Projet object list
-     *
-     * @param projets
-     * @return projetWSs
-     * @throws IOException
-     */
-    public List<ProjetWS> buildProjetWSList(List<Projet> projets) throws IOException {
+    public List<ProjetWS> buildListProjetWS(List<Projet> projets) {
         List<ProjetWS> projetWSs = new ArrayList<>();
         for (Projet projet : projets) {
-            projetWSs.add(buildProjetWsObject(projet));
+            projetWSs.add(this.buildProjetWS(projet));
         }
         return projetWSs;
     }
 
-    private LikeWS getProjectsLikeStatistique(int idProject) throws IOException {
-        LikeWS likews = likeClient.getClient(EntityType.PROJET.name(), idProject);
+    public PhaseWS buildPhaseWS(Phase phase) {
+        PhaseWS phaseWS = new PhaseWS();
 
-        return likews;
+        phaseWS.setId(phase.getId());
+        phaseWS.setNom(phase.getNom());
+        phaseWS.setDateDebutPrevisionnel(phase.getDateDebutPrevisionnel());
+        phaseWS.setDateDebutReel(phase.getDateDebutReel());
+        phaseWS.setDateFinPrevisionnel(phase.getDateFinPrevisionnel());
+        phaseWS.setDateFinReel(phase.getDateFinReel());
+        phaseWS.setActif(phase.isActif());
+
+        return phaseWS;
     }
 
-    private NoteWS getProjectsNoteStatistique(int idProject) throws IOException {
-        NoteWS notews = noteClient.getNote(EntityType.PROJET.name(), idProject);
-        return notews;
+    public Phase buildPhase(PhaseWS phaseWS) {
+        Phase phase = new Phase();
+
+        phase.setId(phaseWS.getId());
+        phase.setNom(phaseWS.getNom());
+        phase.setDateDebutPrevisionnel(phaseWS.getDateDebutPrevisionnel());
+        phase.setDateDebutReel(phaseWS.getDateDebutReel());
+        phase.setDateFinPrevisionnel(phaseWS.getDateFinPrevisionnel());
+        phase.setDateFinReel(phaseWS.getDateFinReel());
+        phase.setActif(phaseWS.isActif());
+
+        return phase;
+    }
+
+    public List<PhaseWS> buildListPhaseWS(List<Phase> phases) {
+        List<PhaseWS> phaseWSs = new ArrayList<>();
+        for (Phase phase : phases) {
+            phaseWSs.add(this.buildPhaseWS(phase));
+        }
+        return phaseWSs;
+    }
+
+    public List<Phase> buildListPhase(List<PhaseWS> phaseWSs) {
+        List<Phase> phases = new ArrayList<>();
+        for (PhaseWS phaseWS : phaseWSs) {
+            phases.add(this.buildPhase(phaseWS));
+        }
+        return phases;
+    }
+
+    public RegionWS buildRegionWS(Region region) {
+        RegionWS regionWS = new RegionWS();
+
+        regionWS.setId(region.getId());
+        regionWS.setLatitude(region.getLatitude());
+        regionWS.setLongitude(region.getLongitude());
+        regionWS.setNom(region.getNom());
+        regionWS.setType(region.getType());
+
+        return regionWS;
+    }
+
+    public Region buildRegion(RegionWS regionWS) {
+        Region region = new Region();
+
+        region.setId(regionWS.getId());
+        region.setLatitude(regionWS.getLatitude());
+        region.setLongitude(regionWS.getLongitude());
+        region.setNom(regionWS.getNom());
+        region.setType(regionWS.getType());
+
+        return region;
+    }
+
+    public List<RegionWS> buildListRegionWS(List<Region> regions) {
+        List<RegionWS> regionWSs = new ArrayList<>();
+        for (Region region : regions) {
+            regionWSs.add(this.buildRegionWS(region));
+        }
+        return regionWSs;
+    }
+
+    public ImpactWS buildImpactWS(Impact impact) {
+        ImpactWS impactWS = new ImpactWS();
+
+        impactWS.setId(impact.getId());
+        impactWS.setAutres(impact.getAutres());
+        impactWS.setTypeImpact(impact.getTypeImpact());
+        impactWS.setUnite(impact.getUnite());
+        impactWS.setValue(impact.getValue());
+
+        return impactWS;
+    }
+
+    public List<ImpactWS> buildListImpactWS(List<Impact> impacts) {
+        List<ImpactWS> impactWSs = new ArrayList<>();
+        for (Impact impact : impacts) {
+            impactWSs.add(this.buildImpactWS(impact));
+        }
+        return impactWSs;
+    }
+
+    public ObjectifWS buildObjectifWS(Objectif objectif) {
+        ObjectifWS objectifWS = new ObjectifWS();
+
+        objectifWS.setId(objectif.getId());
+        objectifWS.setDescription(objectif.getDescription());
+        objectifWS.setNom(objectif.getNom());
+        objectifWS.setTypeObjectif(objectif.getTypeObjectif());
+
+        return objectifWS;
+    }
+
+    public List<ObjectifWS> buildListObjectifWS(List<Objectif> objectifs) {
+        List<ObjectifWS> objectifWSs = new ArrayList<>();
+        for (Objectif objectif : objectifs) {
+            objectifWSs.add(this.buildObjectifWS(objectif));
+        }
+        return objectifWSs;
     }
 }
