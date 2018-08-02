@@ -52,9 +52,9 @@ public class ProjectController {
      */
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     @ApiOperation(value = " Get one projet with medias", notes = "Get particular projet with medias by it id")
-    public ResponseEntity<ProjetWS> getById(@PathVariable int id) throws IOException {
-        ProjetWS projet = projetService.getProjet(id);
-        return new ResponseEntity<ProjetWS>(projet, HttpStatus.OK);
+    public ResponseEntity<ProjetAIO> getById(@PathVariable int id) throws Exception {
+        ProjetAIO projet = projetService.getProjetAIOById(id);
+        return new ResponseEntity<ProjetAIO>(projet, HttpStatus.OK);
 
     }
 }

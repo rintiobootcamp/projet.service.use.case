@@ -38,8 +38,8 @@ public class ProjetService {
         elasticClient = new ElasticClient();
         mediaClient = new MediaClient();
         projetClient = new ProjetClient();
-        projetAIOS = new ArrayList<>();
-       medias =new ArrayList<>();
+        this.projetAIOS = new ArrayList<>();
+       this.medias =new ArrayList<>();
 
     }
 
@@ -105,7 +105,7 @@ public class ProjetService {
     }
 
     public ProjetAIO getProjetAIOById(int id) throws Exception{
-        if(this.projetAIOS==null)
+        if(this.projetAIOS.isEmpty())
             buildProjetAIO();
         return  this.projetAIOS.stream()
                 .filter(t->t.getProjet().getId()==id).findFirst().get();
