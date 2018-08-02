@@ -16,10 +16,6 @@
     <config.home>/home/config/dev</config.home>
   </properties>
 
-
-
-
-
     <dependencies>
         <dependency>
             <groupId>com.rintio</groupId>
