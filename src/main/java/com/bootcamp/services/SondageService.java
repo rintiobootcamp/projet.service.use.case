@@ -7,24 +7,30 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 @Component
 public class SondageService {
-    @Autowired
+
     private ProjetClient projetClient;
-    @Autowired
     private AxeClient axeClient;
-    @Autowired
     private PilierClient pilierClient;
-    @Autowired
     private SecteurClient secteurClient;
-    @Autowired
     private DebatClient debatClient;
-    @Autowired
     private SondageClient sondageClient;
+
+    @PostConstruct
+    public void init(){
+        projetClient = new ProjetClient();
+        axeClient = new AxeClient();
+        pilierClient = new PilierClient();
+        secteurClient = new SecteurClient();
+        debatClient = new DebatClient();
+        sondageClient = new SondageClient();
+    }
 
 
     public String getEntityTitle(String entityType,int entityId){
