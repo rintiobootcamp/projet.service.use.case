@@ -33,15 +33,18 @@ public class SondageService {
     }
 
 
-    public String getEntityTitle(String entityType,int entityId){
+    public SondagePrime getEntityTitle(String entityType,int entityId){
         String entity = entityType.toUpperCase();
+        SondagePrime sondagePrime = new SondagePrime();
         String entityLabel = "";
+        String entityDescription = "";
 
         switch (entity){
             case "PROJET":
                 try {
                     Projet projet = projetClient.getById(entityId);
                     entityLabel = projet.getNom();
+                    entityDescription = projet.getDescription();
                     break;
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -50,6 +53,7 @@ public class SondageService {
                 try {
                     Axe axe = axeClient.getById(entityId);
                     entityLabel = axe.getNom();
+                    entityDescription = axe.getDescription();
                     break;
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -58,6 +62,7 @@ public class SondageService {
                 try {
                     Pilier pilier = pilierClient.getById(entityId);
                     entityLabel = pilier.getNom();
+                    entityDescription = pilier.getDescription();
                     break;
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -66,6 +71,7 @@ public class SondageService {
                 try {
                     Secteur secteur = secteurClient.getById(entityId);
                     entityLabel = secteur.getNom();
+                    entityDescription = secteur.getDescription();
                     break;
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -74,13 +80,16 @@ public class SondageService {
                 try {
                     Debat debat = debatClient.getById(entityId);
                     entityLabel = debat.getSujet();
+                    entityDescription = debat.getSujet();
                     break;
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
 
         }
-        return entityLabel;
+        sondagePrime.setEntityTypelabel(entityLabel);
+        sondagePrime.setEntityDescription(entityDescription);
+        return sondagePrime;
 
     }
 
@@ -97,11 +106,13 @@ public class SondageService {
 
     public SondagePrime getPrime(){
         SondagePrime sondagePrime = new SondagePrime();
+        SondagePrime sondage = new SondagePrime();
         Question question = getUneSongade();
-        String entityLabel = getEntityTitle(question.getEntityType(),question.getEntityId());
+        sondage = getEntityTitle(question.getEntityType(),question.getEntityId());
         ModelMapper modelMapper = new ModelMapper();
         sondagePrime = modelMapper.map(question,SondagePrime.class);
-        sondagePrime.setEntityTypelabel(entityLabel);
+        sondagePrime.setEntityTypelabel(sondage.getEntityTypelabel());
+        sondagePrime.setEntityDescription(sondage.getEntityDescription());
         return sondagePrime;
     }
 

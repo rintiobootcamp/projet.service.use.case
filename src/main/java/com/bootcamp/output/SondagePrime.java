@@ -3,11 +3,19 @@ package com.bootcamp.output;
 public class SondagePrime {
     private int id;
     private String entityType;
-    private int entityId;
     private String sujet;
     private String cover;
     private boolean une;
     private String entityTypelabel;
+    private String entityDescription;
+
+    public String getEntityDescription() {
+        return entityDescription;
+    }
+
+    public void setEntityDescription(String entityDescription) {
+        this.entityDescription = entityDescription;
+    }
 
     public int getId() {
         return id;
@@ -23,14 +31,6 @@ public class SondagePrime {
 
     public void setEntityType(String entityType) {
         this.entityType = entityType;
-    }
-
-    public int getEntityId() {
-        return entityId;
-    }
-
-    public void setEntityId(int entityId) {
-        this.entityId = entityId;
     }
 
     public String getSujet() {
